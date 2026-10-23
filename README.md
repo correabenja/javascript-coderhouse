@@ -21,3 +21,6 @@ Seguir las instrucciones que aparecen en pantalla.
 HTML5
 JavaScript
 Visual Studio Code
+
+NUEVAS FUNCIONALIDADES:
+Simulador de cajero automático desarrollado con HTML y JavaScript como práctica de Coderhouse. Implementa validación de PIN, control de intentos, operaciones de retiro y cálculo de saldo mediante funciones declaradas, expresadas y flecha. Aplica parámetros, valores de retorno (return), condicionales, bucles y manejo de entradas del usuario mediante prompt(), alert() y console.log().
