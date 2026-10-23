@@ -1,58 +1,98 @@
-//Simulador de cajero automatico
-alert("Ingrese la tarjeta");
-const tarjeta = true;
+// Simulador de cajero automático
 
-if (tarjeta === true) {
-    console.log("Continua");
+alert("Ingrese la tarjeta");
+
+// Datos iniciales
+const tarjeta = true;
+const pinRegistrado = "1234";
+const dineroCuenta = 5000;
+
+if (tarjeta) {
+    console.log("Tarjeta ingresada correctamente.");
 } else {
-    console.log("Por favor ingrese su tarjeta");
+    console.log("Por favor, ingrese su tarjeta.");
 }
 
-//Ingreso de Pin
-let pin;
+// Función 1: validar el PIN
+function validarPin(pinIngresado, pinCorrecto) {
+    return pinIngresado === pinCorrecto;
+}
+
+// Función 2: calcular el nuevo saldo
+const calcularSaldo = function (saldoDisponible, montoRetirado) {
+    if (montoRetirado <= 0 || montoRetirado > saldoDisponible) {
+        return null;
+    }
+
+    return saldoDisponible - montoRetirado;
+};
+
+// Función 3: mostrar el resultado
+const mostrarResultado = (montoRetirado, saldoFinal) => {
+    console.log(
+        "Usted ha retirado $" + montoRetirado +
+        ". Su saldo restante es de $" + saldoFinal + "."
+    );
+
+    alert(
+        "Retiro exitoso.\nMonto retirado: $" + montoRetirado +
+        "\nSaldo restante: $" + saldoFinal
+    );
+};
+
+// Control de acceso mediante PIN
 let pinCorrecto = false;
 let intentos = 0;
 
-while (intentos < 3) {
-    pin = prompt(intentos === 0 ? "Ingrese su número de PIN" : "Ingrese nuevamente su número de PIN");
+while (intentos < 3 && !pinCorrecto) {
+    const pinIngresado = prompt(
+        intentos === 0
+            ? "Ingrese su número de PIN"
+            : "Ingrese nuevamente su número de PIN"
+    );
+
     intentos++;
 
-    if (pin === null || pin.trim() === "") {
-        console.log("Entrada inválida, por favor intente nuevamente.");
+    if (pinIngresado === null || pinIngresado.trim() === "") {
+        console.log("Entrada inválida. Intente nuevamente.");
         continue;
     }
 
-    pinCorrecto = pin === "1234";
+    pinCorrecto = validarPin(pinIngresado, pinRegistrado);
 
     if (pinCorrecto) {
-        console.log("PIN correcto, puede realizar las operaciones que usted desee.");
-        break;
+        console.log("PIN correcto. Puede realizar operaciones.");
+    } else {
+        console.log("PIN incorrecto.");
     }
-
-    console.log("PIN incorrecto");
 }
 
+// Operación de retiro
 if (pinCorrecto) {
-    //Retiro de dinero
-    let dineroCuenta = 5000;
-    let montoRetirado = parseInt(prompt("Ingrese el monto que desea retirar"));
+    const entradaMonto = prompt("Ingrese el monto que desea retirar");
 
-    if (isNaN(montoRetirado)) {
-        console.log("El monto ingresado no es un número válido.");
+    if (entradaMonto === null || entradaMonto.trim() === "") {
+        console.log("No ingresó ningún monto.");
     } else {
-        if (montoRetirado > 0) {
-            if (montoRetirado <= dineroCuenta) {
-                let saldo = dineroCuenta - montoRetirado;
-                console.log("Usted ha retirado $ " + montoRetirado + " y el saldo que le queda es de un total de: " + saldo);
-            } else {
-                console.log("El saldo que tienes en tu cuenta es insuficiente.");
-            }
+        const montoRetirado = Number(entradaMonto);
+
+        if (!Number.isFinite(montoRetirado)) {
+            console.log("El monto ingresado no es un número válido.");
+        } else if (montoRetirado <= 0) {
+            console.log("El monto debe ser mayor que cero.");
+        } else if (montoRetirado > dineroCuenta) {
+            console.log("El saldo de su cuenta es insuficiente.");
         } else {
-            console.log("El monto a retirar debe ser mayor a cero.");
+            const saldoFinal = calcularSaldo( dineroCuenta, montoRetirado);
+            if (saldoFinal !== null) {
+                mostrarResultado(montoRetirado, saldoFinal);
+            }
         }
     }
 } else {
-    console.log("Ha superado el límite de intentos. No puede realizar operaciones.");
+    console.log(
+        "Ha superado el límite de intentos. No puede realizar operaciones."
+    );
 }
 
 console.log("Gracias por utilizar nuestro cajero automático.");
