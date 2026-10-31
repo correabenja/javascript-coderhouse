@@ -1,11 +1,21 @@
-// Simulador de cajero automático
+/* Simulador de cajero automático */
 
 alert("Ingrese la tarjeta");
 
-// Datos iniciales
+/* Datos iniciales */
 const tarjeta = true;
 const pinRegistrado = "1234";
 const dineroCuenta = 5000;
+
+/* Array de movimientos de la cuenta */
+const movimientosCuenta = [
+    "Deposito",
+    "Retiro",
+    "Consulta de saldo",
+    "Transferencia",
+    "Pago de servicio"
+];
+
 
 if (tarjeta) {
     console.log("Tarjeta ingresada correctamente.");
@@ -13,12 +23,12 @@ if (tarjeta) {
     console.log("Por favor, ingrese su tarjeta.");
 }
 
-// Función 1: validar el PIN
+/* Función 1: validar el PIN */
 function validarPin(pinIngresado, pinCorrecto) {
     return pinIngresado === pinCorrecto;
 }
 
-// Función 2: calcular el nuevo saldo
+/* Función 2: calcular el nuevo saldo */
 const calcularSaldo = function (saldoDisponible, montoRetirado) {
     if (montoRetirado <= 0 || montoRetirado > saldoDisponible) {
         return null;
@@ -27,7 +37,7 @@ const calcularSaldo = function (saldoDisponible, montoRetirado) {
     return saldoDisponible - montoRetirado;
 };
 
-// Función 3: mostrar el resultado
+/* Función 3: mostrar el resultado */
 const mostrarResultado = (montoRetirado, saldoFinal) => {
     console.log(
         "Usted ha retirado $" + montoRetirado +
@@ -40,7 +50,7 @@ const mostrarResultado = (montoRetirado, saldoFinal) => {
     );
 };
 
-// Control de acceso mediante PIN
+/* Control de acceso mediante PIN */
 let pinCorrecto = false;
 let intentos = 0;
 
@@ -66,8 +76,49 @@ while (intentos < 3 && !pinCorrecto) {
         console.log("PIN incorrecto.");
     }
 }
+/* Arrays: manipulación de extremos */
 
-// Operación de retiro
+// Agregar un movimiento al principio
+movimientosCuenta.unshift("Inicio de sesión");
+
+// Eliminar el último movimiento
+const movimientoEliminado = movimientosCuenta.pop();
+
+console.log("Se ha eliminado el elemento: " + movimientoEliminado);
+
+/* Búsqueda con includes() e indexOf() */
+const movimientoBuscado = prompt("¿Qué movimiento desea buscar?");
+
+if (movimientoBuscado !== null && movimientoBuscado.trim() !== "") {
+    if (movimientosCuenta.includes(movimientoBuscado)) {
+        const posicion = movimientosCuenta.indexOf(movimientoBuscado);
+
+        console.log(
+            "Movimiento encontrado: " + movimientoBuscado +
+            ". Posición: " + posicion
+        );
+    } else {
+        console.log("El movimiento no existe en la cuenta.");
+    }
+}
+
+/* Modificar un elemento con splice() */
+movimientosCuenta.splice(2, 1, "Extraccion de efectivo");
+
+/* Función 4: listar movimientos con for...of */
+function listarMovimientos(lista) {
+    console.log("--- Historial de movimientos ---");
+
+    for (const movimiento of lista) {
+        console.log("Movimiento: " + movimiento);
+    }
+
+    console.log("Total de movimientos: " + lista.length);
+}
+
+listarMovimientos(movimientosCuenta);
+
+/* Operación de retiro */
 if (pinCorrecto) {
     const entradaMonto = prompt("Ingrese el monto que desea retirar");
 
@@ -83,9 +134,15 @@ if (pinCorrecto) {
         } else if (montoRetirado > dineroCuenta) {
             console.log("El saldo de su cuenta es insuficiente.");
         } else {
-            const saldoFinal = calcularSaldo( dineroCuenta, montoRetirado);
+            const saldoFinal = calcularSaldo(dineroCuenta, montoRetirado);
+
             if (saldoFinal !== null) {
                 mostrarResultado(montoRetirado, saldoFinal);
+
+                /* Registrar el retiro con push() */
+                movimientosCuenta.push("Retiro realizado");
+
+                console.log("Retiro agregado al historial.");
             }
         }
     }
@@ -94,5 +151,6 @@ if (pinCorrecto) {
         "Ha superado el límite de intentos. No puede realizar operaciones."
     );
 }
+
 
 console.log("Gracias por utilizar nuestro cajero automático.");
