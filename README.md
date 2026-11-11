@@ -40,28 +40,24 @@ Visual Studio Code
 
 🆕 Nuevas funcionalidades
 
-Funciones y lógica de programación:
+Implementación de clases e instanciación de objetos
 
-Se implementa la validación de PIN, control de intentos, operaciones de retiro y cálculo de saldo mediante funciones declaradas, expresadas y flecha. Se aplican parámetros, valores de retorno (return), condicionales, bucles y manejo de entradas del usuario mediante prompt(), alert() y console.log().
+Se incorporó la clase CuentaBancaria al simulador de cajero automático, utilizando un constructor para inicializar las propiedades principales de cada cuenta: identificador, titular, PIN, saldo y movimientos.
 
-Arrays y manipulación de datos:
+📌 ¿Qué se implementó?
 
-Se incorpora un array para administrar los movimientos de la cuenta, aplicando diferentes métodos para agregar, eliminar, modificar y buscar elementos:
+Creación de la clase CuentaBancaria mediante class.
 
-push(): agregar movimientos al final.
+Incorporación de métodos para consultar el saldo, realizar retiros y listar movimientos.
 
-pop(): eliminar el último movimiento.
+Creación de tres instancias independientes utilizando new.
 
-unshift(): agregar movimientos al principio.
+Almacenamiento de los objetos en constantes.
 
-splice(): modificar elementos del array.
+Integración de los métodos de la clase con la lógica del simulador.
 
-includes(): comprobar si existe un movimiento.
+Verificación de las instancias y sus propiedades mediante console.log.
 
-indexOf(): obtener la posición de un elemento.
+Actualización del saldo y registro de operaciones en el historial de movimientos.
 
-length: consultar la cantidad de movimientos.
-
-for...of: recorrer y mostrar el historial de movimientos.
-
-Además, se incorporan validaciones para controlar el acceso a las operaciones y mantener actualizado el saldo de la cuenta.
+🎯 Objetivo: integrar los conceptos de programación orientada a objetos mediante clases, constructores, métodos e instanciación de objetos, manteniendo la continuidad del simulador de cajero automático desarrollado con JavaScript.
